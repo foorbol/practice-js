@@ -3,29 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 
-<form name="registration" action="#" id="form" onsubmit="valid(this)">
-    <input name="username" value="" type="text" placeholder="Ваше имя"><span id="user"></span>
-    <input name="password" value="" type="password" placeholder="Пароль"><span id="pass"></span>
-    <button type="submit" onclick="valid(document.getElementsById(form))" id="enter">Отправить</button>
+<form name="registration" id="form">
+    <input name="username" type="text" placeholder="Ваше имя" required pattern="[A-Za-zА-яа-яЁё0-9]([ A-Za-zА-яа-яЁё0-9])*">
+    <input name="password" type="password" placeholder="Пароль" required pattern="[0-9]{8,20}">
+    <button id="enter" onclick="handleForm(document.getElementById('form'), event)">Отправить</button>
 </form>
 
 <script>
-    (function () {
+        function handleForm(form, event) {
+            event.preventDefault();
+            const username = form.elements.namedItem('username').value;
+            const password = form.elements.namedItem('password').value;
+            const error = document.querySelector('.error');
+            const usernameRegex = /^[a-z0-9]+$/i;
 
-    })();
-    /*const form = document.forms.registration;
-    const elemUse = form.elements.username;
-    const elemPass = form.elements.password;
+            if (usernameRegex.test(username)) {
+                console.log('Имя соответстыует');
+            } else {
+                console.error('Проверьте поле username');
+            }
+            console.log(`User ${username}`);
 
-    function valid(form) {
-        let name = form.name.value;
-
-    };*/
-
-
+            if (password.length >= 8 && password.length <= 20) {
+                console.log('Пароль соответствует');
+            } else {
+                console.error('Неверный пароль');
+            }
+            console.log(`Pass ${password}`);
+        }
 </script>
 </body>
 </html>
